@@ -34,6 +34,10 @@ return Application::instance()
 	return new Database($DB_DSN, $DB_USER, $DB_PASSWORD);
 })
 
+->singleton('Flash', function() {
+	return new Flash();
+})
+
 ->singleton('Users', function($app) {
 	return new UserTable($app->Database, $app->Validator);
 })
