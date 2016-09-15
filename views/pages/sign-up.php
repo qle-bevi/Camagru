@@ -4,7 +4,13 @@ $title = "Enregistrement";
 $errors = [];
 if (!empty($_POST)) {
 	if ($app->Users->Create($_POST))
-		die("OK");
+	{
+		$this->Flash->set('alert', [
+			"type" => "info",
+			"message" => "Veuillez confirmer votre compte !"
+		]);
+		$app->redirect("/sign-in");
+	}
 	$errors =  $app->Users->validator()->errors();
 }
 require PARTIALS."sign_header.php";
