@@ -5,6 +5,7 @@ use App\UserTable;
 use App\Validator;
 use App\Api42;
 use Core\Database;
+use Core\Flash;
 use Core\Auth;
 
 define("ROOT", __DIR__."/");

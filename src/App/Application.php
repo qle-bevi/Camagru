@@ -14,7 +14,14 @@ class Application extends Container {
 
 	public function mustBeLoggued() {
 		if (!$this->Auth->isLogged())
+		{
+			$this->Flash["alert"] = [
+				"type" => "info",
+				"message" => "Vous devez vous connecter pour accéder à Camagru!"
+			];
 			$this->redirect("/sign-in");
+		}
+
 		$this->user = $this->Auth->user();
 	}
 

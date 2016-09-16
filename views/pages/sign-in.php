@@ -3,13 +3,17 @@ $app->mustBeGuest();
 $title = "Connexion";
 $error = false;
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-	$user = $_POST["username"];
+	$user = trim($_POST["username"]);
 	$pwd = hash("whirlpool", $user.$_POST["password"].$user);
 	$credentials = [
 		"username" => $user,
 		"password" => $pwd
 	];
 	if ($app->Auth->attempt($credentials)) {
+		$app->Flash["alert"] = [
+			"type" => "success",
+			"message" => "Salut {$user}!"
+		];
 		$app->redirect("/gallery");
 	}
 	$error = "Identifiants incorrects !";
