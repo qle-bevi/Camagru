@@ -7,8 +7,7 @@ use Core\Table;
 use Core\Helpers;
 use App\Validator;
 
-class UserTable extends Table
-{
+class UserTable extends Table {
   private $validator;
 
   public function __construct(Database $db, Validator $validator) {

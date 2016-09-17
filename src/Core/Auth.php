@@ -2,8 +2,7 @@
 
 namespace Core;
 
-class Auth
-{
+class Auth {
 	private $table;
 	private $identifier;
 

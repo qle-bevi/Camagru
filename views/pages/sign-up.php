@@ -4,7 +4,7 @@ $title = "Enregistrement";
 $errors = [];
 $fields = [];
 if (!empty($_POST)) {
-	if ($app->Users->Create($_POST))
+	if ($app->Users->create($_POST))
 	{
 		$app->Flash["alert"] = [
 			"type" => "success",
@@ -16,8 +16,7 @@ if (!empty($_POST)) {
 	$fields = array_diff_key($_POST, $errors);
 }
 require PARTIALS."sign_header.php";
-?>
-<?php if(!empty($errors)): ?>
+if(!empty($errors)): ?>
 	<div class="sign-error">
 		<ul>
 			<?php foreach($errors as $k => $v): ?>

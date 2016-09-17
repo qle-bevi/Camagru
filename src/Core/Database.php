@@ -30,6 +30,7 @@ class Database {
 		$query = $this->getPDO()->query($sqlQuery);
 		if (strstr($sqlQuery, "SELECT"))
 			return $this->fetch($query, $fetchClass, $one);
+		return true;
 	}
 
 	public function queryWithParameters($sqlQuery, $params = [], $fetchClass = null, $one = false) {
@@ -37,6 +38,7 @@ class Database {
 		$query->execute($params);
 		if (strstr($sqlQuery, "SELECT"))
 			return $this->fetch($query, $fetchClass, $one);
+		return true;
 	}
 
 	private function fetch($query, $fetchClass, $one) {

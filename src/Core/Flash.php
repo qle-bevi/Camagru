@@ -2,8 +2,7 @@
 
 namespace Core;
 
-class Flash implements \ArrayAccess
-{
+class Flash implements \ArrayAccess {
   public function __construct() {
       if (!isset($_SESSION["FLASH"]))
         $_SESSION["FLASH"] = [];

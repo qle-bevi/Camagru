@@ -133,6 +133,10 @@ button.awesome {
 	text-align: center;
 }
 
+.alert a {
+	color: white;
+}
+
 .alert.anim-play {
 	animation-name: alert;
 	animation-duration: 1.3s;

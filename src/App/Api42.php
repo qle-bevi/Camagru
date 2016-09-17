@@ -4,8 +4,7 @@ namespace App;
 
 use Core\Helpers;
 
-class Api42
-{
+class Api42 {
   const AUTH_URI = "https://api.intra.42.fr/oauth/authorize";
   const TOKEN_URI = "https://api.intra.42.fr/oauth/token";
   const USER_URI = "https://api.intra.42.fr/v2/me";
