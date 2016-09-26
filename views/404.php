@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>404</title>
-	<link rel="stylesheet" href="/static/css/style.css" charset="utf-8">
+	<link rel="stylesheet" href="/public/css/style.css" charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
@@ -16,7 +16,7 @@
 		}
 	</style>
 	<div class="center">
-		<img src="/static/pictures/404cat.jpg" alt="404 not found" />
+		<img src="/public/pictures/404cat.jpg" alt="404 not found" />
 		<div class="text">
 			Cette page n'existe pas !
 		</div>

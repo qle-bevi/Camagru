@@ -1,3 +1,3 @@
 #!/bin/bash
 
-php -S localhost:3000 routing.php
+php -S localhost:3000 index.php

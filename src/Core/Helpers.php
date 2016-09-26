@@ -12,4 +12,13 @@ class Helpers {
     }
     return $str;
   }
+
+  static function url($url, $params = []) {
+    $url = ltrim($url, "/");
+    $url = "http://".$_SERVER["HTTP_HOST"]."/".$url;
+    if (!empty($params)) {
+      $url .= "?".http_build_query($params);
+    }
+    return $url;
+  }
 }

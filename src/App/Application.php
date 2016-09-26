@@ -16,7 +16,8 @@ class Application extends Container {
 		if (!$this->Auth->isLogged()) {
 			$this->Flash["alert"] = [
 				"type" => "info",
-				"message" => "Vous devez vous connecter pour accéder à Camagru!"
+				"message" => "Vous devez vous connecter pour accéder à Camagru!",
+				"delay" => 3000
 			];
 			$this->redirect("/sign-in");
 		}

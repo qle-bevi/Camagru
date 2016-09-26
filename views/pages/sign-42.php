@@ -1,5 +1,6 @@
 <?php
 $app->mustBeGuest();
+$title = "Inscription 42";
 if (!isset($_SESSION["42_USER"])) {
     if (!isset($_GET["code"]))
         $app->Api42->authorize();
@@ -7,7 +8,8 @@ if (!isset($_SESSION["42_USER"])) {
         || ($userData = $app->Api42->getUserData($token)) === false) {
         $app->Flash["alert"] = [
             "type" => "error",
-            "message" => "Une erreur est survenue avec l'API de 42!"
+            "message" => "Une erreur est survenue avec l'API de 42!",
+            "delay" => 3000
         ];
         $app->redirect("/sign");
     }
@@ -15,15 +17,17 @@ if (!isset($_SESSION["42_USER"])) {
         $user = $app->Auth->user()->username;
         $app->Flash["alert"] = [
             "type" => "success",
-            "message" => "Salut {$user}!"
+            "message" => "Salut {$user}!",
+            "delay" => 2000
         ];
         $app->redirect("/gallery");
     }
+    
     $_SESSION["42_USER"] = [
         "id_42" => $userData->id,
         "username" => $userData->login,
         "email" => $userData->email,
-        "confirmed" => 1
+        "avatar" => $userData->image_url
     ];
 }
 

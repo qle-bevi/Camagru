@@ -4,6 +4,7 @@ $username = $app->user()->username;
 $app->Auth->logOut();
 $app->Flash["alert"] = [
 	"type" => "info",
-	"message" => "Aurevoir {$username}!"
+	"message" => "Aurevoir {$username}!",
+	"delay" => 2000
 ];
 $app->redirect("/sign-in");

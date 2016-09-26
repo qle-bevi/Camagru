@@ -1,4 +1,5 @@
+
 </div>
-<script type="text/javascript" src="/static/js/alert.js"></script>
+<script type="text/javascript" src="/public/js/alert.js"></script>
 </body>
 </html>

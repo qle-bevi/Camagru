@@ -1,6 +1,6 @@
 <?php
 $app->mustBeConfirmed();
-$title = "Gallerie";
+$title = "Nouvelle photo";
 require PARTIALS."header.php"
 ?>
 

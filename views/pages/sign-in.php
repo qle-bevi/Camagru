@@ -10,10 +10,10 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 		"password" => $pwd
 	];
 	if ($app->Auth->attempt($credentials)) {
-		$app->mustBeConfirmed();
 		$app->Flash["alert"] = [
 			"type" => "success",
-			"message" => "Salut {$user}!"
+			"message" => "Salut {$user}!",
+			"delay" => 2000
 		];
 		$app->redirect("/gallery");
 	}

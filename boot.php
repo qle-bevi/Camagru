@@ -5,6 +5,7 @@ use App\UserTable;
 use App\Validator;
 use App\Api42;
 use Core\Database;
+use Core\SimpleMailer;
 use Core\Flash;
 use Core\Auth;
 
@@ -12,6 +13,7 @@ define("ROOT", __DIR__."/");
 define("STORAGE", ROOT."storage/");
 define("PAGES", ROOT."views/pages/");
 define("PARTIALS", ROOT."views/partials/");
+define("MAILS", ROOT."views/mails/");
 
 require ROOT."autoloader.php";
 Autoloader::register();
@@ -40,7 +42,11 @@ return Application::instance()
 })
 
 ->singleton('Users', function($app) {
-	return new UserTable($app->Database, $app->Validator);
+	return new UserTable($app->Database, $app->Validator, $app->Mailer);
+})
+
+->singleton('Mailer', function() {
+	return new SimpleMailer();
 })
 
 ->singleton('Auth', function($app) {

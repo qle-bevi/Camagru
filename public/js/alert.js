@@ -5,6 +5,8 @@
 	var close = alertElem.querySelector('.close');
 	var hover = false;
 	var closing = false;
+    console.log(alertElem.dataset.delay);
+	var delay = parseInt(alertElem.dataset.delay);
 
 	function doClose()
 	{
@@ -20,20 +22,23 @@
 		}, 1500);
 	}
 
-	alertElem.addEventListener("mouseenter", function over() {
-		hover = true;
-	});
-
-	alertElem.addEventListener("mouseleave", function leave() {
-		hover = false;
-		setTimeout(doClose, 5000);
-	});
-
 	close.addEventListener("click", function(ev) {
 		ev.preventDefault();
 		hover = false;
 		doClose();
 	});
 
-	setTimeout(doClose, 5000);
+	if (!delay)
+		return ;
+    console.log(delay);
+	alertElem.addEventListener("mouseenter", function over() {
+		hover = true;
+	});
+
+	alertElem.addEventListener("mouseleave", function leave() {
+		hover = false;
+		setTimeout(doClose, delay);
+	});
+
+	setTimeout(doClose, delay);
 })();

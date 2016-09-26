@@ -15,7 +15,7 @@ abstract class Table {
       $chunks = explode("\\", $class);
       $this->table = strtolower(str_replace("Table", "", end($chunks)))."s";
     }
-    $path = ROOT."/".str_replace(["Table", "\\"], ["Entry", "/"], $class).".php";
+    $path = ROOT."src/".str_replace(["Table", "\\"], ["Entry", "/"], $class).".php";
     $this->entryClass = file_exists($path) ? str_replace("Table", "Entry", $class) : null;
   }
 

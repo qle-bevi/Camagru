@@ -4,14 +4,17 @@ namespace App;
 
 Use Core\Database;
 use Core\Table;
+use Core\SimpleMailer;
 use Core\Helpers;
 use App\Validator;
 
 class UserTable extends Table {
   private $validator;
+  private $mailer;
 
-  public function __construct(Database $db, Validator $validator) {
+  public function __construct(Database $db, Validator $validator, SimpleMailer $mailer) {
     $this->validator = $validator;
+    $this->mailer = $mailer;
     parent::__construct($db);
   }
 
@@ -36,11 +39,14 @@ class UserTable extends Table {
       return false;
     $this->query("
     INSERT INTO {$this->table}
-    (username, email, id_42)
-    VALUES (?, ?, ?)", [
-      $fields["username"],
-      $fields["email"],
-      $fields["id_42"]]);
+    (username, email, avatar, id_42, confirmed)
+    VALUES (?, ?, ?, ?, ?)", [
+        $fields["username"],
+        $fields["email"],
+        $fields["avatar"],
+        $fields["id_42"],
+        1
+    ]);
     return true;
   }
 
@@ -63,7 +69,10 @@ class UserTable extends Table {
       $password,
       $fields["token"]]);
     $host = $_SERVER["HTTP_HOST"];
-    mail($fields["email"], "Bienvenue sur Camagru !", 'Cliquez sur ce lien pour vérifier votre compte <a href="http://'.$host.'/sign/confirm/'.$fields["token"].'">Confirmer</a>');
+    $this->mailer->send(MAILS."confirmation_mail.php", $fields["email"], "Confirmer votre mail", [
+        "username" => $fields["username"],
+        "token" => $fields["token"]
+    ]);
     return true;
   }
 }
