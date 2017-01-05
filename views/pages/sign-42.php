@@ -2,8 +2,9 @@
 $app->mustBeGuest();
 $title = "Inscription 42";
 if (!isset($_SESSION["42_USER"])) {
-    if (!isset($_GET["code"]))
+    if (!isset($_GET["code"])) {
         $app->Api42->authorize();
+    }
     if (($token = $app->Api42->getAccessToken($_GET["code"])) === false
         || ($userData = $app->Api42->getUserData($token)) === false) {
         $app->Flash["alert"] = [
@@ -22,7 +23,7 @@ if (!isset($_SESSION["42_USER"])) {
         ];
         $app->redirect("/gallery");
     }
-    
+
     $_SESSION["42_USER"] = [
         "id_42" => $userData->id,
         "username" => $userData->login,
@@ -36,8 +37,7 @@ $errors = [];
 
 if (isset($_POST["username"])) {
     $fields = array_merge($_SESSION["42_USER"], ["username" => trim($_POST["username"])]);
-    if ($app->Users->create42($fields))
-    {
+    if ($app->Users->create42($fields)) {
         unset($_SESSION["42_USER"]);
         $app->Auth->attempt(["id_42" => $fields["id_42"]]);
         $app->Flash["alert"] = [
@@ -47,14 +47,15 @@ if (isset($_POST["username"])) {
         $app->redirect('/gallery');
     }
     $errors = $app->Users->validator()->errors();
-    if ($username === $fields["username"])
+    if ($username === $fields["username"]) {
         $username = "";
+    }
 }
 require PARTIALS."sign_header.php";
-if(!empty($errors)): ?>
+if (!empty($errors)): ?>
     <div class="sign-error">
         <ul>
-            <?php foreach($errors as $k => $v): ?>
+            <?php foreach ($errors as $k => $v): ?>
                 <li><?= $v; ?></li>
             <?php endforeach; ?>
         </ul>

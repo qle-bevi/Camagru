@@ -3,21 +3,21 @@ $app->mustBeGuest();
 $title = "Connexion";
 $error = false;
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-	$user = trim($_POST["username"]);
-	$pwd = hash("whirlpool", $user.$_POST["password"].$user);
-	$credentials = [
-		"username" => $user,
-		"password" => $pwd
-	];
-	if ($app->Auth->attempt($credentials)) {
-		$app->Flash["alert"] = [
-			"type" => "success",
-			"message" => "Salut {$user}!",
-			"delay" => 2000
-		];
-		$app->redirect("/gallery");
-	}
-	$error = "Identifiants incorrects !";
+    $user = trim($_POST["username"]);
+    $pwd = hash("whirlpool", $user.$_POST["password"].$user);
+    $credentials = [
+        "username" => $user,
+        "password" => $pwd
+    ];
+    if ($app->Auth->attempt($credentials)) {
+        $app->Flash["alert"] = [
+            "type" => "success",
+            "message" => "Salut {$user}!",
+            "delay" => 2000
+        ];
+        $app->redirect("/gallery");
+    }
+    $error = "Identifiants incorrects !";
 }
 require PARTIALS."sign_header.php";
 if ($error): ?>

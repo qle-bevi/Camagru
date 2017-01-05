@@ -13,6 +13,7 @@ define("ROOT", __DIR__."/");
 define("STORAGE", ROOT."storage/");
 define("PAGES", ROOT."views/pages/");
 define("PARTIALS", ROOT."views/partials/");
+define("PUBLIK", ROOT."public/");
 define("MAILS", ROOT."views/mails/");
 
 require ROOT."autoloader.php";

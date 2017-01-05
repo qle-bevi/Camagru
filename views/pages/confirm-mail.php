@@ -1,9 +1,9 @@
 <?php
 $app->mustBeGuest();
-if (!isset($_GET["token"]))
+if (!isset($_GET["token"])) {
     $app->redirect("/sign-in");
-switch ($app->Users->confirmMail($_GET["token"]))
-{
+}
+switch ($app->Users->confirmMail($_GET["token"])) {
     case 1:
         $type = "success";
         $message = "Votre compte a été activé! Vous pouvez vous connecter.";

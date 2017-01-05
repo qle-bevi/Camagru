@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class SimpleMailer {
+class SimpleMailer
+{
     public function send($template, $dest, $title = "", $vars = [])
     {
         extract($vars);

@@ -1,7 +1,7 @@
 <?php
 $app->mustBeConfirmed();
 $title = "Modifier profil";
-array_push($scripts, "/public/js/edit-profile.js");
+array_push($scripts, "/js/edit-profile.js");
 if (!empty($_POST))
 {
     var_dump($_POST["old_password"]);
