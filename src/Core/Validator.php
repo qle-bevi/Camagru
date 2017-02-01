@@ -19,6 +19,10 @@ class Validator
         return $this->errors;
     }
 
+	public function addError($field, $value) {
+		$this->errors[$field] = $value;
+	}
+
     public function validates($fields, $rules)
     {
         $this->fields = $fields;

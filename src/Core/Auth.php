@@ -51,7 +51,7 @@ class Auth
 
     public function user()
     {
-        if (!$this->isLogged()) {
+        if (!$this->isLoggued()) {
             return null;
         }
         return $this->table->query(

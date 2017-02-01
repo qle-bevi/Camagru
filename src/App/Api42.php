@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Core\Helpers;
-
 class Api42
 {
     const AUTH_URI = "https://api.intra.42.fr/oauth/authorize";

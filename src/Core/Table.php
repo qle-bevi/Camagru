@@ -9,6 +9,8 @@ abstract class Table
 
     protected $table;
 
+	protected $fillables = [];
+
     public function __construct(Database $db)
     {
         $this->db = $db;
@@ -28,7 +30,7 @@ abstract class Table
 
     public function all()
     {
-        return $this->db->query("SELECT * FROM `{$this->table}`");
+        return $this->db->query("SELECT * FROM {$this->table}");
     }
 
     public function byId($id)
@@ -38,13 +40,32 @@ abstract class Table
 
     public function insert($params)
     {
+		foreach ($params as $k => $v) {
+			if (!in_array($k, $this->fillables))
+				unset($params[$k]);
+		}
         $fields = implode(", ", array_keys($params));
         $values = implode("', '", array_values($params));
-        $values = "'".$values."'";
+        $values = "'{$values}'";
         return $this->db->query("
-      INSERT INTO {$this->table} ({$fields}) VALUES ({$values})
-    ");
+		INSERT INTO {$this->table} ({$fields}) VALUES ({$values})
+		");
     }
+
+	public function update($params, $where) {
+		$sql = "UPDATE {$this->table} ";
+		foreach ($params as $k => $v) {
+			if (in_array($k, $this->fillables))
+				$sql .= "SET {$k}='{$v}', ";
+		}
+		$sql = rtrim($sql, ", ");
+		$sql .= " WHERE ";
+		foreach ($where as	$k => $v) {
+			$sql .= "{$k}='{$v}' AND ";
+		}
+		$sql = rtrim($sql, " AND ");
+		return $this->db->query($sql);
+	}
 
     public function query($query, $parameters = null, $one = false)
     {

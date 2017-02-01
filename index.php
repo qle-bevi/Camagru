@@ -1,5 +1,11 @@
 <?php
-$app = require "boot.php";
+
+define("ROOT", __DIR__."/");
+define("STORAGE", ROOT."storage/");
+define("PAGES", ROOT."views/pages/");
+define("PARTIALS", ROOT."views/partials/");
+define("PUBLIK", ROOT."public/");
+define("MAILS", ROOT."views/mails/");
 
 /*
 ** SIMPLE ROUTING
@@ -11,15 +17,17 @@ $ext = pathinfo($file_request, PATHINFO_EXTENSION);
 
 if ($_SERVER["REQUEST_URI"] !== "/" && file_exists(PUBLIK.$file_request))
     return false;
-    
+
 if ($file_request === "") {
-    $file_request = "gallery.php";
+    $file_request = "sign-in.php";
 } else if ($ext === "") {
     $ext = ".php";
     $file_request .= $ext;
 }
 
 if (file_exists(PAGES.$file_request)) {
+	$app = require "boot.php";
+	csrf_protect();
     foreach ($_POST as $k => $v)
         $_POST[$k] = trim($v);
     $scripts = [];

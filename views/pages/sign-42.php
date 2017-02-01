@@ -64,6 +64,7 @@ if (!empty($errors)): ?>
     Choisissez un pseudo
     <hr>
     <form action="/sign-42" method="post">
+		<?php csrf_input(); ?>
         <input class="form-input" type="text" name="username" value="<?= $username ?>" placeholder="Nom d'utilisateur">
         <button type="submit" class="awesome large orange form-btn" name="button">S'enregistrer »</button>
     </form>

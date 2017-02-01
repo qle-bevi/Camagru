@@ -9,17 +9,12 @@ use Core\SimpleMailer;
 use Core\Flash;
 use Core\Auth;
 
-define("ROOT", __DIR__."/");
-define("STORAGE", ROOT."storage/");
-define("PAGES", ROOT."views/pages/");
-define("PARTIALS", ROOT."views/partials/");
-define("PUBLIK", ROOT."public/");
-define("MAILS", ROOT."views/mails/");
+session_start();
 
 require ROOT."autoloader.php";
-Autoloader::register();
+require ROOT."src/helpers.php";
 
-session_start();
+Autoloader::register();
 
 return Application::instance()
 
@@ -27,42 +22,42 @@ return Application::instance()
 ** DEFINE SERVICES
 */
 
-->singleton('DatabaseNoDb', function() {
-	require ROOT."config/database.php";
-	$dsn = str_replace("dbname=camagru;", "", $DB_DSN);
-	return new Database($dsn, $DB_USER, $DB_PASSWORD);
+->singleton('DatabaseNoDb', function () {
+    require ROOT."config/database.php";
+    $dsn = str_replace("dbname=camagru", "", $DB_DSN);
+    return new Database($dsn, $DB_USER, $DB_PASSWORD);
 })
 
-->singleton('Database', function() {
-	require ROOT."config/database.php";
-	return new Database($DB_DSN, $DB_USER, $DB_PASSWORD);
+->singleton('Database', function () {
+    require ROOT."config/database.php";
+    return new Database($DB_DSN, $DB_USER, $DB_PASSWORD);
 })
 
-->singleton('Flash', function() {
-	return new Flash();
+->singleton('Flash', function () {
+    return new Flash();
 })
 
-->singleton('Users', function($app) {
-	return new UserTable($app->Database, $app->Validator, $app->Mailer);
+->singleton('Users', function ($app) {
+    return new UserTable($app->Database, $app->Validator, $app->Mailer);
 })
 
-->singleton('Mailer', function() {
-	return new SimpleMailer();
+->singleton('Mailer', function () {
+    return new SimpleMailer();
 })
 
-->singleton('Auth', function($app) {
-	return new Auth($app->Users);
+->singleton('Auth', function ($app) {
+    return new Auth($app->Users);
 })
 
-->singleton('Api42', function() {
-	require ROOT."config/api42.php";
-	return new Api42($API_UID, $API_SECRET);
+->singleton('Api42', function () {
+    require ROOT."config/api42.php";
+    return new Api42($API_UID, $API_SECRET);
 })
 
 /*
 ** DEFINE FACTORIES
 */
 
-->factory('Validator', function($app) {
-	return new Validator($app->Database);
+->factory('Validator', function ($app) {
+    return new Validator($app->Database);
 });

@@ -4,7 +4,7 @@ $title = "Connexion";
 $error = false;
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     $user = trim($_POST["username"]);
-    $pwd = hash("whirlpool", $user.$_POST["password"].$user);
+    $pwd = salt($user, $_POST["password"]);
     $credentials = [
         "username" => $user,
         "password" => $pwd
@@ -26,6 +26,7 @@ if ($error): ?>
 	</div>
 <?php endif; ?>
 <form action="/sign-in" method="post">
+	<?php csrf_input(); ?>
 	<input class="form-input" type="text" name="username" value="" placeholder="Nom d'utilisateur">
 	<input class="form-input" type="password" name="password" value="" placeholder="Mot de passe">
 	<button type="submit" class="awesome large orange form-btn" name="button">Se connecter »</button>

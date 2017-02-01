@@ -25,6 +25,10 @@ ul {
 	text-align: left;
 }
 
+.hide {
+	display: none!important;
+}
+
 /*
 ** FORMS
 */
@@ -236,10 +240,24 @@ button.awesome {
     text-transform: uppercase;
 }
 
+.page-title.sub {
+    width: 100%;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
 .box {
     margin-right: 15px;
     padding: 40px;
     border: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+.happy-cat {
+	position: absolute;
+	width: 150px;
+	top: 59px;
+	right: -7px;
+	z-index: 1;
 }
 
 /*
@@ -300,6 +318,7 @@ button.awesome {
     color: #ff5c00;
 	background: white;
 }
+
 .user {
     position: relative;
 	height: 60px;
@@ -309,11 +328,11 @@ button.awesome {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    font-size: 0.8rem;
-}
-
-.user:hover {
-    color: #ff5c00;
+    font-size: 1rem;
+	color: inherit;
+	background: white;
+	border-left: solid 1px rgba(0, 0, 0, 0.1);
+	border-right: solid 1px rgba(0, 0, 0, 0.1);
 }
 
 .user .actions {
@@ -322,12 +341,14 @@ button.awesome {
     background: white;
     padding-bottom: 10px;
     position: absolute;
-    top: 59px;
-    right: 0;
+	z-index:2;
+    top: 60px;
+    right: -1px;
     line-height: 10px;
 	list-style: none;
-    border: solid 1px #f0f0f0;
-    border-top: none;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+	border-top: none;
+	font-size: 0.8rem;
 }
 
 .user .actions.hide {
@@ -338,12 +359,11 @@ button.awesome {
     text-decoration: none;
     display: block;
     padding: 10px;
-    color: #ff5c00;
+    color: inherit;
 }
 
 .user .actions a:hover {
-    background: #ff5c00;
-    color: white;
+    color: #ff5c00;
 }
 
 .user .avatar {
@@ -368,16 +388,79 @@ button.awesome {
 }
 
 /*
-** EDIT PROFILE
+** SHOOT
 */
 
-.change-avatar img{
-    display: block;
-    margin: 0 auto;
-    border: solid 4px #ff5c00;
-    cursor: pointer;
+.shoot-outer {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
+.shoot-left {
+	width: 55%;
+}
+
+.shoot-photos {
+	width: 45%;
+	padding-left: 15px;
+}
+
+.shoot-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.shoot-actions ul strong{
+	font-size: 1.2em;
+}
+
+@media screen and (max-width: 700px) {
+    .shoot-left {
+        width: 100%;
+    }
+    .shoot-photos {
+        width: 100%;
+		padding-top: 15px;
+		padding-left: 0;
+    }
+}
+
+.shoot-modes {
+	border-bottom: solid 1px #ff5c00;
+}
+
+.shoot-editor {
+	margin-top: 15px;
+}
+
+.shoot-assets {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	overflow-x: scroll;
+	overflow-y: hidden;
+
+}
+
+.shoot-assets img {
+	margin: 10px;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+.shoot-assets img:hover {
+	transform: scale(1.3);
+}
+
+canvas {
+	width: 100%;
+	background: black;
+}
 /*
 ** FOOTER
 */

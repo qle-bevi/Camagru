@@ -31,7 +31,6 @@ $app->Database->query("
     id_42 INT,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255),
-    avatar VARCHAR(255),
     email VARCHAR(255) NOT NULL,
     confirmed BOOLEAN DEFAULT 0,
     token VARCHAR(255),

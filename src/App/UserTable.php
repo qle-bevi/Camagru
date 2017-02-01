@@ -5,13 +5,20 @@ namespace App;
 use Core\Database;
 use Core\Table;
 use Core\SimpleMailer;
-use Core\Helpers;
 use App\Validator;
 
 class UserTable extends Table
 {
     private $validator;
     private $mailer;
+
+	protected $fillables = [
+		"username",
+		"password",
+		"email",
+		"confirmed",
+		"token"
+	];
 
     public function __construct(Database $db, Validator $validator, SimpleMailer $mailer)
     {
@@ -34,55 +41,54 @@ class UserTable extends Table
         if (intval($user->confirmed)) {
             return 0;
         }
-        $this->query("UPDATE users SET confirmed = '1' WHERE id = '{$user->id}'");
+        $this->update(["confirmed" => "1"], ["id" => $user->id]);
         return 1;
     }
 
     public function create42($fields)
     {
-        if (!$this->validator->validates($fields, [
-      "username" => "required|alphanumdash|length:3:15|unique:users",
-    ])) {
+		$rules = [
+			"username" => "required|alphanumdash|length:3:15|unique:users"
+    	];
+        if (!$this->validator->validates($fields, $rules)) {
             return false;
         }
-        $this->query("
-    INSERT INTO {$this->table}
-    (username, email, avatar, id_42, confirmed)
-    VALUES (?, ?, ?, ?, ?)", [
-        $fields["username"],
-        $fields["email"],
-        $fields["avatar"],
-        $fields["id_42"],
-        1
-    ]);
+        $this->insert($fields);
         return true;
     }
 
+	public function changePassword($user, $fields)
+	{
+		if ($user->password !== "") {
+			$hop = salt($user->username, $fields["old_password"]);
+			if ($user->password !== $hop) {
+				$this->validator->addError("old_password", "Ancien mot de passe incorrect.");
+				return false;
+			}
+		}
+		$rules = ["new_password" => "required|length:6:150|confirm"];
+		if (!$this->validator->validates($fields, $rules))
+			return false;
+		$hnp = salt($user->username, $fields["new_password"]);
+		$this->update(["password" => $hnp], ["id" => $user->id]);
+		return true;
+	}
+
     public function create($fields)
     {
-        if (!$this->validator->validates($fields,
-    [
-      "username" => "required|alphanumdash|length:3:15|unique:users",
-      "password" => "required|length:6:150|confirm",
-      "email" => "required|email|unique:users"
-    ])) {
+		$rules = [
+          "username" => "required|alphanumdash|length:3:15|unique:users",
+          "password" => "required|length:6:150|confirm",
+          "email" => "required|email|unique:users"
+	  	];
+        if (!$this->validator->validates($fields, $rules)) {
             return false;
         }
-        $password = hash("whirlpool", $fields["username"].$fields["password"].$fields["username"]);
-        $fields["token"] = $fields["username"]."_".Helpers::randomString(50);
-        $this->query("
-    INSERT INTO {$this->table}
-    (username, email, password, token)
-    VALUES (?, ?, ?, ?)", [
-      $fields["username"],
-      $fields["email"],
-      $password,
-      $fields["token"]]);
-        $host = $_SERVER["HTTP_HOST"];
-        $this->mailer->send(MAILS."confirmation_mail.php", $fields["email"], "Confirmer votre mail", [
-        "username" => $fields["username"],
-        "token" => $fields["token"]
-    ]);
+        $fields["password"] = salt($fields["username"], $fields["password"]);
+        $fields["token"] = $fields["username"]."_".randomString(50);
+        unset($fields["password_confirm"]);
+        $this->insert($fields);
+        $this->mailer->send(MAILS."confirmation_mail.php", $fields["email"], "Confirmer votre mail", $fields);
         return true;
     }
 }
