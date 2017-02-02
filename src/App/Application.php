@@ -24,6 +24,7 @@ class Application extends Container
             $this->redirect("/sign-in");
         }
         $this->user = $this->Auth->user();
+        $this
     }
 
     public function mustBeGuest()
